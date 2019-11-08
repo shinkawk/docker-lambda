@@ -12,8 +12,10 @@ RUN rm -rf /var/runtime /var/lang /var/rapid && \
 # Add these as a separate layer as they get updated frequently
 RUN pip install -U pip setuptools --no-cache-dir && \
   pip install -U virtualenv pipenv --no-cache-dir && \
-  pip install -U awscli boto3 aws-sam-cli==0.31.0 aws-lambda-builders==0.5.0 --no-cache-dir &&\
-  pip install -U npm 
+  pip install -U awscli boto3 aws-sam-cli==0.31.0 aws-lambda-builders==0.5.0 --no-cache-dir
 
-RUN yum install nodejs
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+RUN yum clean all && yum makecache fast
+RUN yum install -y gcc-c++ make
+RUN yum install -y nodejs
 RUN npm install -g serverless
